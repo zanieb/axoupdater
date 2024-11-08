@@ -30,6 +30,8 @@ use camino::Utf8PathBuf;
 
 use tempfile::TempDir;
 
+use crate::receipt::InstallLayout;
+
 /// Provides information about the result of the upgrade operation
 pub struct UpdateResult {
     /// The old version (pre-upgrade)
@@ -88,6 +90,8 @@ pub struct AxoUpdater {
     current_version_installed_by: Option<Provider>,
     /// Information about the install prefix of the previous version
     install_prefix: Option<Utf8PathBuf>,
+    /// Information about the install layout of the previous version
+    install_layout: Option<InstallLayout>,
     /// Whether to display the underlying installer's stdout
     print_installer_stdout: bool,
     /// Whether to display the underlying installer's stderr
@@ -124,6 +128,7 @@ impl AxoUpdater {
             current_version: None,
             current_version_installed_by: None,
             install_prefix: None,
+            install_layout: None,
             print_installer_stdout: true,
             print_installer_stderr: true,
             installer_path: None,
@@ -143,6 +148,7 @@ impl AxoUpdater {
             current_version: None,
             current_version_installed_by: None,
             install_prefix: None,
+            install_layout: None,
             print_installer_stdout: true,
             print_installer_stderr: true,
             installer_path: None,
@@ -173,6 +179,7 @@ impl AxoUpdater {
             current_version: None,
             current_version_installed_by: None,
             install_prefix: None,
+            install_layout: None,
             print_installer_stdout: true,
             print_installer_stderr: true,
             installer_path: None,

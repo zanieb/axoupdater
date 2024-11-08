@@ -18,6 +18,8 @@ fn default_as_true() -> bool {
 pub struct InstallReceipt {
     /// The path this app has been installed to
     pub install_prefix: Utf8PathBuf,
+    /// The layout of the installation path
+    pub install_layout: InstallLayout,
     /// A list of binaries installed by this app
     pub binaries: Vec<String>,
     /// A list of libraries installed by this app
@@ -45,6 +47,15 @@ pub struct ReceiptProvider {
     pub version: String,
 }
 
+/// The layout of the installation path
+#[derive(Clone, Debug, Deserialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum InstallLayout {
+    Flat,
+    CargoHome,
+    Hierarchical,
+}
+
 impl AxoUpdater {
     /// Attempts to load an install receipt in order to prepare for an update.
     /// If present and valid, the install receipt is used to populate the
@@ -68,6 +79,7 @@ impl AxoUpdater {
 
         self.current_version_installed_by = Some(provider);
         self.install_prefix = Some(receipt.install_prefix);
+        self.install_layout = Some(receipt.install_layout);
         self.modify_path = receipt.modify_path;
 
         Ok(self)
